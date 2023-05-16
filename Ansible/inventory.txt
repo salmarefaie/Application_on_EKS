@@ -1,0 +1,1 @@
+bastion-host ansible_host=52.203.64.202 ansible_user=ec2-user ansible_ssh_private_key_file=./EKS.pem

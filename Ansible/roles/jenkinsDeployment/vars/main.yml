@@ -1,0 +1,9 @@
+deployment_files:
+   - ../Jenkins-Deployment/Deployment.yaml
+   - ../Jenkins-Deployment/Namespace.yaml
+   - ../Jenkins-Deployment/pv.yaml
+   - ../Jenkins-Deployment/pvc.yaml
+   - ../Jenkins-Deployment/Role.yaml
+   - ../Jenkins-Deployment/roleBinding.yaml
+   - ../Jenkins-Deployment/Service.yaml
+   - ../Jenkins-Deployment/serviceAccount.yaml

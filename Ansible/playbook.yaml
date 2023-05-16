@@ -1,0 +1,7 @@
+- name: env-setup   
+  hosts: bastion-host             
+  become: true                         
+  roles:
+    - role: roles/aws-cli
+    - role: roles/jenkinsDeployment
+    - role: roles/kubectl

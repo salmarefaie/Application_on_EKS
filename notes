@@ -1,0 +1,45 @@
+run cluster in eks :
+    - aws configure
+    - aws eks --region us-east-1 update-kubeconfig --name cluster
+    - kubectl get nodes or kubectl get services
+
+
+jenkins deplyment:
+    1. kubectl apply -f namespace.yaml
+    2. kubectl apply -f pv.yaml
+    3. kubectl apply -f pvc.yaml
+    4. kubectl apply -f service-account.yaml
+    5. kubectl apply -f role.yaml
+    6. kubectl apply -f role-binding.yaml
+    7. kubectl apply -f deployment.yaml
+    8. kubectl apply -f service.yaml
+    9. kubectl get all -n jenkins
+
+
+basion host:
+    1. chmod 400 EKS.pem
+    2. scp -i EKS.pem EKS.pem ec2-user@52.203.64.202:/home/ec2-user
+    3. ssh -i "EKS.pem" ec2-user@52.203.64.202
+  
+    4. scp -i EKS.pem install-packages.sh ec2-user@52.203.64.202:/home/ec2-user  or ansible
+    6. sh install-packages.sh
+
+
+enable docker on node worker:
+    1. sudo systemctl start docker
+    2. sudo systemctl status docker
+
+
+ansible commands:
+    -  ansible-galaxy init roles/docker
+    -  ansible-galaxy init roles/aws-cli
+    -  ansible-galaxy init roles/kubectl
+    -  ansible-playbook playbook.yaml -i inventory.txt
+
+
+nginx ingress controller:
+    - using helm ---> helm upgrade --install ingress-nginx ingress-nginx 
+                      repo https://kubernetes.github.io/ingress-nginx 
+                      namespace ingress-nginx --create-namespace
+
+    - using kubernetess --->  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.7.1/deploy/static/provider/cloud/deploy.yaml

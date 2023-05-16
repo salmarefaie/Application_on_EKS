@@ -4,12 +4,9 @@ metadata:
   name: jenkins-pvc
   namespace: jenkins
 spec:
+  storageClassName: manual
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
-      storage: 2Gi
-
-
-
-  
+      storage: 4Gi

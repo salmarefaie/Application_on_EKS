@@ -2,19 +2,13 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: jenkins-pv
+  labels:
+    type: volume
 spec:
-  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: manual
   capacity:
-    storage: 2Gi
+    storage: 4Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   hostPath:
-    path: "/mnt/data/jenkins_home"
-
-
-
-
-  
-
-
-  
+    path: /home/ec2-user/"

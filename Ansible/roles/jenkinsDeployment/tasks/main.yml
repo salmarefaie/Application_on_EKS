@@ -1,0 +1,21 @@
+- name: create .aws directory
+  file:
+    path: /.aws
+    state: directory
+
+
+- name: copy credentials to ec2 machine
+  copy:
+      src:   /home/salma/.aws/credentials
+      dest:  /home/ec2-user/.aws/credentials
+
+
+- name: copy deployment files for jnkins
+  copy:
+    src: "{{item}}"
+    dest: .
+  with_items: "{{ deployment_files }}"
+
+
+# - name: connect to eks cluster
+#   shell: aws eks --region us-east-1 update-kubeconfig --name cluster

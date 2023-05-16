@@ -1,0 +1,28 @@
+- name: sudo yum update
+  yum:
+    update_cache: yes
+
+
+- name: install unzip         
+  yum:                              
+    name: unzip                 
+    state: present                  
+
+
+- name: install aws cli 
+  get_url:
+      url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+      dest: ./awscliv2
+
+
+- name: Extract aws cli 
+  unarchive:
+    src: awscliv2.zip
+    dest: .
+    remote_src: yes
+
+
+- name: install aws
+  command: ./aws/install
+
+

@@ -1,0 +1,28 @@
+- name: sudo yum update
+  yum:
+    update_cache: yes
+
+
+- name: install kubectl 1
+  command: curl -LO https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl
+
+
+- name: install kubectl 2
+  command: install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+
+- name: permision for kubectl
+  command: chmod +x kubectl
+
+
+- name: create directory
+  file:
+    path: ~/.local/bin
+    state: directory
+
+
+- name: Copy file
+  copy:
+    src: /home/ec2-user/kubectl
+    dest: ~/.local/bin/kubectl
+    remote_src: yes

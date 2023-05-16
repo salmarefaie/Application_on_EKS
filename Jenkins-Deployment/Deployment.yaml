@@ -16,7 +16,7 @@ spec:
       serviceAccountName: jenkins-service-account
       containers:
       - name: jenkins
-        image: salmarefaie29/jenkins-image-on-pod
+        image: 498765197219.dkr.ecr.us-east-1.amazonaws.com/jenkins-image:latest
         ports:
         - containerPort: 8080
         volumeMounts:
@@ -26,11 +26,8 @@ spec:
           mountPath: /var/run
       volumes:
       - name: jenkins-home
-        emptyDir: { }
+        persistentVolumeClaim:
+            claimName: jenkins-pvc
       - name: docker-socket
         hostPath:
           path: /var/run
-
-
-
-
