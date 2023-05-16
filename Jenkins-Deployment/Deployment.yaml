@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+  namespace: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      serviceAccountName: jenkins-service-account
+      containers:
+      - name: jenkins
+        image: salmarefaie29/jenkins-image-on-pod
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: jenkins-home
+          mountPath: /var/jenkins_home
+        - name: docker-socket
+          mountPath: /var/run
+      volumes:
+      - name: jenkins-home
+        emptyDir: { }
+      - name: docker-socket
+        hostPath:
+          path: /var/run
+
+
+
+
