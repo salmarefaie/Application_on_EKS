@@ -99,8 +99,7 @@
     kubectl apply -f .
     kubectl get all -n jenkins
  ```
- ![jenkins](https://github.com/salmarefaie/Application_on_EKS/assets/76884936/fb9c1db7-dca2-44e9-a30b-50287ee239a7)
-
+![jenkins](https://github.com/salmarefaie/Application_on_EKS/assets/76884936/eb9e45de-d9f0-41c2-b5bd-e6a005e18f09)
 
 ## Deploy Nginx ingress controller
 - nginx ingress controller can be deployed by helm or kubernetess
@@ -136,4 +135,4 @@
 
 - output from CI/CD phase 
 
-![app](https://github.com/salmarefaie/Application_on_EKS/assets/76884936/00543eeb-5608-4312-87cf-eef3c43e46f6)
+![app](https://github.com/salmarefaie/Application_on_EKS/assets/76884936/d8e2db82-922f-4c2d-ae08-0cb9c2ae143d)
