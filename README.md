@@ -121,15 +121,13 @@
     kubectl get all -n jenkins
     kubectl logs pod/jenkins-78679c566d-pc8lr -n jenkins
  ```
- 
-  ![Screenshot from 2023-02-27 03-17-32](https://user-images.githubusercontent.com/76884936/221494787-684c0e42-cb49-4fa5-96d1-04122f0dbeee.png)
+ ![jenkins](https://github.com/salmarefaie/Application_on_EKS/assets/76884936/fb9c1db7-dca2-44e9-a30b-50287ee239a7)
 
 ## Deploy Python App
 - we will deploy python app with redis on eks cluster using CI/CD jenkins pipeline.
 - In CI phase, python app image is built and pushed to docker hub.
-- In CD phase, python app with redis is deployed.
+- In CD phase, python app with redis is deployed through nginx ingress.
 
-  ![Screenshot from 2023-02-27 09-07-08](https://user-images.githubusercontent.com/76884936/221496885-5e6e73e7-121c-4541-b0b8-0ae72703d3e4.png)
 
 ## Steps for jenkins pipeline
 - clone repo which have application, Docker file to build image and deployment files to deploy application.
@@ -144,15 +142,6 @@
 
 - make pipeline with code which exists in repo (jenkinsfile)
 
- ![Screenshot from 2023-02-27 03-32-34](https://user-images.githubusercontent.com/76884936/221499118-5f8e7557-fcd3-4606-b45a-6f353d192515.png)
- 
- ![Screenshot from 2023-02-27 03-37-26](https://user-images.githubusercontent.com/76884936/221499269-73a24f1d-73fc-4a56-95db-71a4381f1b40.png)
- 
-- output from CI phase 
+- output from CI/CD phase 
 
-![Screenshot from 2023-02-27 09-23-06](https://user-images.githubusercontent.com/76884936/221499761-e28860f5-80b0-4a2f-a5ae-7d20c1089b4f.png)
-
-- output from CD phase 
-
-![Screenshot from 2023-02-27 03-37-29](https://user-images.githubusercontent.com/76884936/221499887-db1d825d-46ec-47ae-9d88-abd98ab816cc.png)
-
+![app](https://github.com/salmarefaie/Application_on_EKS/assets/76884936/00543eeb-5608-4312-87cf-eef3c43e46f6)
