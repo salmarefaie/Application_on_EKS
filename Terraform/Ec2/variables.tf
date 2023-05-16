@@ -23,11 +23,6 @@ variable "vpcID" {
   description = "vpc id"
 }
 
-variable "enable_publicIP" {
-  type        = bool
-  description = "true"
-}
-
 variable "public_cidr" {
   type        = string
   description = "0.0.0.0/0"

@@ -1,21 +1,20 @@
 # cluster eks
 resource "aws_eks_cluster" "cluster" {
   name     = var.cluster-name
-  role_arn = var.cluster-role-arn
+  role_arn = aws_iam_role.cluster-role.arn
 
   vpc_config {
     subnet_ids = [
       var.private-subnet1-id,
       var.private-subnet2-id
     ]
-    endpoint_private_access = var.endpoint
-    endpoint_public_access  = var.endpoint
+    endpoint_private_access = true   
+    endpoint_public_access  = true      # false
     security_group_ids      = [aws_security_group.EKS-sg.id]
-
   }
 
   depends_on = [
-    var.policy-cluster
+    aws_iam_role_policy_attachment.AmazonEKSClusterPolicy
   ]
 }
 
@@ -23,7 +22,7 @@ resource "aws_eks_cluster" "cluster" {
 resource "aws_eks_node_group" "worker-nodes" {
   cluster_name    = aws_eks_cluster.cluster.name
   node_group_name = var.worker-nodes-name
-  node_role_arn   = var.node-role-arn
+  node_role_arn   = aws_iam_role.node-role.arn
 
   subnet_ids = [
     var.private-subnet1-id,
@@ -44,9 +43,9 @@ resource "aws_eks_node_group" "worker-nodes" {
   }
 
   depends_on = [
-    var.policy-node,
-    var.policy-CNI,
-    var.policy-container-readonly
+    aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
+    aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
+    aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly
   ]
 
   remote_access {

@@ -1,6 +1,7 @@
 variable "vpc_cidr" {
   type        = string
   description = "vpc cidr"
+  default     = "10.0.0.0/16"
 }
 
 variable "vpc_name" {
@@ -47,7 +48,6 @@ variable "route" {
   type        = map(any)
   description = "route for route table"
 }
-
 
 variable "subnet_association" {
   type        = map(any)

@@ -1,5 +1,5 @@
 # role for cluster
-resource "aws_iam_role" "clusrter-role" {
+resource "aws_iam_role" "cluster-role" {
   name = var.cluster-role-name
 
   assume_role_policy = <<POLICY
@@ -21,10 +21,8 @@ POLICY
 # eks policy for cluster role 
 resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.clusrter-role.name
+  role       = aws_iam_role.cluster-role.name
 }
-
-
 
 # role for worker node
 resource "aws_iam_role" "node-role" {

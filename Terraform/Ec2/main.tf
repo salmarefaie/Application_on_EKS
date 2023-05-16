@@ -9,13 +9,12 @@ data "aws_ami" "ami-linux" {
   }
 }
 
-
-#basion host 
+# basion host 
 resource "aws_instance" "public-ec2" {
   ami                         = data.aws_ami.ami-linux.id
   instance_type               = var.ec2_type
   subnet_id                   = var.subnet_id
-  associate_public_ip_address = var.enable_publicIP
+  associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.ec2-sg.id]
   key_name                    = var.key_name
 
@@ -38,6 +37,14 @@ resource "aws_security_group" "ec2-sg" {
     cidr_blocks = [var.public_cidr]
   }
 
+  ingress {
+    description = "ssh"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "http"
+    cidr_blocks = [var.public_cidr]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -49,4 +56,3 @@ resource "aws_security_group" "ec2-sg" {
     Name = var.security_group_ec2
   }
 }
-
