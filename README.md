@@ -34,9 +34,9 @@
 - Custiomize jenkins image with kubectl and docker client are built from Docker file and pushed to ECR. 
 - we will need kubectl and docker client in CI/CD Jenkins Pipeline.
   
-![jenkins-image](https://github.com/salmarefaie/Application_on_EKS/assets/76884936/cdb7d34d-8021-4484-8018-e38061088794)
+![jenkins-image](https://github.com/salmarefaie/Application_on_EKS/assets/76884936/cd12a670-a80f-4702-a1e2-3f5a551d724d)
 
-![jenkins-repo](https://github.com/salmarefaie/Application_on_EKS/assets/76884936/d06c86be-cb31-46da-93ec-33260b4bbb5a)
+![jenkins-repo](https://github.com/salmarefaie/Application_on_EKS/assets/76884936/eba958fb-c3a1-4f96-b056-370fd8ca4da0)
 
 ## Install AWS CLI and kubectl using scripting
 - we need to install aws cli and kubectl on ec2 bastion host to connect with EKS cluster using bastion host machine.
