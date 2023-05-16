@@ -38,7 +38,7 @@
 
 ![jenkins-repo](https://github.com/salmarefaie/Application_on_EKS/assets/76884936/d06c86be-cb31-46da-93ec-33260b4bbb5a)
 
-## Install AWS CLI and kubectl 
+## Install AWS CLI and kubectl using scripting
 - we need to install aws cli and kubectl on ec2 bastion host to connect with EKS cluster using bastion host machine.
 - we will connect with bastion host machine using ssh and transfare key to bastion host machine to connect with node worker through bastion host.
 
@@ -54,32 +54,17 @@
     scp -i EKS.pem install-packages.sh ec2-user@52.203.64.202:/home/ec2-user
     sh install-packages.sh
  ```
- 
- ## Enable Docker 
- - we can enable docker manually on node worker and we connect to node worker through bastion host.
- 
- ```bash      
-    ssh -i "project.pem" ec2-user@10.0.3.18
-    sudo systemctl start docker
-    sudo systemctl status docker
- ```
 
 ## Configuration using Ansible
-- another way to install kubectl, aws cli on bastion host machine and enable docker on node worker.
+- another way to install kubectl, aws cli on bastion host machine.
 - make config file in ~/.ssh/config
 
-```bash      
-   Host bastion-host
-        hostname 3.86.85.134
-        user ubuntu
-        port 22
-        identityfile /home/salma/ITI-Devops/final-project/ansible/project.pem
- ```
- - To run ansible code to machines
+
+- To run ansible code to machines
  
  ```bash
     cd ansible
-    ansible-galaxy init roles/docker
+    ansible-galaxy init roles/jenkinsDeployment
     ansible-galaxy init roles/aws-cli
     ansible-galaxy init roles/kubectl
     ansible-playbook playbook.yaml -i inventory.txt
@@ -98,30 +83,37 @@
  - transfare yaml files from our machine to bastion host machine.
  
  ```bash
-    scp -i project.pem deployment.yaml ubuntu@3.86.85.134:/home/ubuntu
-    scp -i project.pem service.yaml ubuntu@3.86.85.134:/home/ubuntu
-    scp -i project.pem pv.yaml ubuntu@3.86.85.134:/home/ubuntu
-    scp -i project.pem pvc.yaml ubuntu@3.86.85.134:/home/ubuntu
-    scp -i project.pem service-account.yaml ubuntu@3.86.85.134:/home/ubuntu
-    scp -i project.pem role.yaml ubuntu@3.86.85.134:/home/ubuntu
-    scp -i project.pem role-binding.yaml ubuntu@3.86.85.134:/home/ubuntu
-    scp -i project.pem namespace.yaml ubuntu@3.86.85.134:/home/ubuntu
+    scp -i EKS.pem Deployment.yaml ec2-user@52.203.64.202:/home/ec2-user
+    scp -i EKS.pem Service.yaml ec2-user@52.203.64.202:/home/ec2-user
+    scp -i EKS.pem pv.yaml ec2-user@52.203.64.202:/home/ec2-user
+    scp -i EKS.pem pvc.yaml ec2-user@52.203.64.202:/home/ec2-user
+    scp -i EKS.pem serviceAccount.yaml ec2-user@52.203.64.202:/home/ec2-user
+    scp -i EKS.pem Role.yaml ec2-user@52.203.64.202:/home/ec2-user
+    scp -i EKS.pem roleBinding.yaml ec2-user@52.203.64.202:/home/ec2-user
+    scp -i EKS.pem Namespace.yaml ec2-user@52.203.64.202:/home/ec2-user
  ```
  - apply yaml files to deploy jenkins.
  
  ```bash
     kubectl apply -f namespace.yaml
-    kubectl apply -f pv.yaml
-    kubectl apply -f pvc.yaml
-    kubectl apply -f service-account.yaml
-    kubectl apply -f role.yaml
-    kubectl apply -f role-binding.yaml
-    kubectl apply -f deployment.yaml
-    kubectl apply -f service.yaml
+    kubectl apply -f .
     kubectl get all -n jenkins
-    kubectl logs pod/jenkins-78679c566d-pc8lr -n jenkins
  ```
  ![jenkins](https://github.com/salmarefaie/Application_on_EKS/assets/76884936/fb9c1db7-dca2-44e9-a30b-50287ee239a7)
+
+
+## Deploy Nginx ingress controller
+- nginx ingress controller can be deployed by helm or kubernetess
+- using helm
+```bash
+    helm upgrade --install ingress-nginx ingress-nginx 
+    repo https://kubernetes.github.io/ingress-nginx 
+    namespace ingress-nginx --create-namespace
+ ```
+ - using kubernetess
+ ```bash
+     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.7.1/deploy/static/provider/cloud/deploy.yaml
+ ```
 
 ## Deploy Python App
 - we will deploy python app with redis on eks cluster using CI/CD jenkins pipeline.

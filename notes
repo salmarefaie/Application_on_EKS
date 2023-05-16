@@ -6,9 +6,9 @@ run cluster in eks :
 
 jenkins deplyment:
     1. kubectl apply -f namespace.yaml
-    2. kubectl apply -f pv.yaml
-    3. kubectl apply -f pvc.yaml
-    4. kubectl apply -f service-account.yaml
+    2. kubectl apply -f pv.yaml 
+    3. kubectl apply -f pvc.yaml 
+    4. kubectl apply -f service-account.yaml 
     5. kubectl apply -f role.yaml
     6. kubectl apply -f role-binding.yaml
     7. kubectl apply -f deployment.yaml
