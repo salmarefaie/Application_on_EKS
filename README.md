@@ -1,9 +1,10 @@
 # Application_on_EKS
 
 ## Description
-- Create a simple infrastructure on aws to make secure cluster eks using terraform.
+- Create a simple infrastructure on aws to make secure cluster eks wit worker nodes in different availability zones using terraform.
+- Containerize jenkins app and push it to ECR.
 - Deploy and Configure Jenkins on EKS.
-- Deploy python app application on EKS cluster using CI/CD jenkins pipeline.
+- Deploy python app application on EKS cluster using nginx ingress controller and CI/CD jenkins pipeline.
 
 
 ## Tools
@@ -19,44 +20,38 @@
 ## Infrastructure
 - Required infrastructure to make EKS Cluster is vpc with 4 subnets; 2 public subnets and 2 private subnets, internet gateway, nat and bastion host in public subnets and worker node in private subnets. we will connect with EKS cluster using Ec2 bastion host.
 
-  ![Untitled Diagram drawio](https://user-images.githubusercontent.com/76884936/221486336-3dd39189-b5a3-41c1-93ef-261448e484b0.png)
-
 - To Run Infrastructure 
 
   ```bash      
    cd Terraform
+   terraform fmt
    terraform init
    terraform plan
    terraform apply
   ```
   
 ## Build Jenkins Image
-- Custiomize jenkins image with kubectl and docker client are built from Docker file and pushed to docker hub. 
+- Custiomize jenkins image with kubectl and docker client are built from Docker file and pushed to ECR. 
 - we will need kubectl and docker client in CI/CD Jenkins Pipeline.
-
-  ```bash      
-    docker build -t jenkins-image-on-pod .
-    docker tag jenkins-image-on-pod salmarefaie29/jenkins-image-on-pod
-    docker images
-    docker push salmarefaie29/jenkins-image-on-pod
-  ```
   
-  ![Screenshot from 2023-02-27 01-13-22](https://user-images.githubusercontent.com/76884936/221487573-7367fe83-785d-4527-8a9e-b028bd6ff6d1.png)
+![jenkins-image](https://github.com/salmarefaie/Application_on_EKS/assets/76884936/cdb7d34d-8021-4484-8018-e38061088794)
+
+![jenkins-repo](https://github.com/salmarefaie/Application_on_EKS/assets/76884936/d06c86be-cb31-46da-93ec-33260b4bbb5a)
 
 ## Install AWS CLI and kubectl 
 - we need to install aws cli and kubectl on ec2 bastion host to connect with EKS cluster using bastion host machine.
 - we will connect with bastion host machine using ssh and transfare key to bastion host machine to connect with node worker through bastion host.
 
  ```bash      
-    chmod 400 project.pem
-    scp -i project.pem project.pem ubuntu@3.86.85.134:/home/ubuntu
-    ssh -i "project.pem" ubuntu@3.86.85.134
+    chmod 400 EKS.pem
+    scp -i EKS.pem EKS.pem ec2-user@52.203.64.202:/home/ec2-user
+    ssh -i "EKS.pem" ec2-user@52.203.64.202
   ```
   
 - install kubectl and aws cli using scripting
 
  ```bash      
-    scp -i project.pem install-packages.sh ubuntu@3.86.85.134:/home/ubuntu
+    scp -i EKS.pem install-packages.sh ec2-user@52.203.64.202:/home/ec2-user
     sh install-packages.sh
  ```
  
