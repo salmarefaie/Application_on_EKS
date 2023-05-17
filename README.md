@@ -129,8 +129,6 @@
 
 - make docker credentials 
 
-![Screenshot from 2023-02-27 03-18-34](https://user-images.githubusercontent.com/76884936/221498361-e8aac26d-f8f4-440f-b2d8-3e6dad76d790.png)
-
 - make pipeline with code which exists in repo (jenkinsfile)
 
 - output from CI/CD phase 
